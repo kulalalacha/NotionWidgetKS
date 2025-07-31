@@ -12,11 +12,9 @@ function script(d, s, id) {
 
 function getWeather(lat, lon) {
   const el = document.getElementById("weather");
-
-  
   const latStr = lat.toFixed(2).replace('.', '');
   const lonStr = lon.toFixed(2).replace('.', '');
-  const url = `https://forecast7.com/en/${latStr}d${lonStr}/your-city/`;
+  const url = `https://forecast7.com/en/${latStr}d${lonStr}/location/`;
 
   el.setAttribute("href", url);
   el.setAttribute("data-label_1", "YOUR CITY");
@@ -27,6 +25,7 @@ function getWeather(lat, lon) {
     script(document, 'script', 'weatherwidget-io-js');
   }, 50);
 }
+
 
 
 
