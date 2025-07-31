@@ -65,12 +65,11 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (ev
 });
 
 // Get lat/lon from URL
-// Get lat/lon/city from URL
 const params = new URLSearchParams(window.location.search);
 const rawLat = parseFloat(params.get("lat"));
 const rawLon = parseFloat(params.get("lon"));
-const lat = isNaN(rawLat) ? 53.55 : rawLat;
-const lon = isNaN(rawLon) ? 10.00 : rawLon;
+const lat = !isNaN(rawLat) ? rawLat : 53.55;
+const lon = !isNaN(rawLon) ? rawLon : 10.00;
 const city = params.get("city") || "hamburg";
 
 getWeather(lat, lon, city);
