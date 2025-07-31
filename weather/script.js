@@ -1,5 +1,8 @@
 function script(d, s, id) {
-  if (d.getElementById(id)) return;
+  // โหลด widget script ใหม่ หลังจากแก้ href/data
+  const old = d.getElementById(id);
+  if (old) old.remove();
+
   const js = d.createElement(s),
         fjs = d.getElementsByTagName(s)[0];
   js.id = id;
@@ -8,15 +11,21 @@ function script(d, s, id) {
 }
 
 function getWeather(lat, lon) {
-  const iframe = document.getElementById("weather");
-  const url = `https://forecast7.com/en/${lat.toFixed(2)}d${lon.toFixed(2)}/your-city/`;
-  iframe.setAttribute("href", url);
-  iframe.setAttribute("data-label_1", "YOUR CITY");
-  iframe.setAttribute("data-icons", "Climacons Animated");
-  iframe.setAttribute("data-mode", "Current");
+  const el = document.getElementById("weather");
+  const latFixed = lat.toFixed(2);
+  const lonFixed = lon.toFixed(2);
+
+  const url = `https://forecast7.com/en/${latFixed}d${lonFixed}/location/`;
+  el.setAttribute("href", url);
+  el.setAttribute("data-label_1", "YOUR CITY");
+  el.setAttribute("data-icons", "Climacons Animated");
+  el.setAttribute("data-mode", "Current");
+
+  // โหลด widget script ใหม่ หลังจากเซ็ตค่าทั้งหมด
+  script(document, 'script', 'weatherwidget-io-js');
 }
 
-// THEME BASED ON SYSTEM PREFERENCE
+// Theme
 function light() {
   document.documentElement.setAttribute('data-theme', 'pure');
   const el = document.getElementById('weather');
@@ -25,7 +34,6 @@ function light() {
   el.setAttribute('data-textcolor', '#37352f');
   el.removeAttribute('data-cloudfill');
   el.setAttribute('data-suncolor', '#F58f70');
-  script(document, 'script', 'weatherwidget-io-js');
 }
 
 function dark() {
@@ -36,17 +44,16 @@ function dark() {
   el.removeAttribute('data-textcolor');
   el.setAttribute('data-cloudfill', '#191919');
   el.setAttribute('data-suncolor', '#F58f70');
-  script(document, 'script', 'weatherwidget-io-js');
 }
 
-// Apply theme once
+// Theme init
 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
   dark();
 } else {
   light();
 }
 
-// Watch for theme changes
+// Watch theme change
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
   if (event.matches) {
     dark();
@@ -55,9 +62,9 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (ev
   }
 });
 
-// ✅ READ lat/lon from URL
+// Get lat/lon from URL
 const params = new URLSearchParams(window.location.search);
-const lat = parseFloat(params.get("lat")) || 53.55; // default: Hamburg
+const lat = parseFloat(params.get("lat")) || 53.55;
 const lon = parseFloat(params.get("lon")) || 10.00;
 
 getWeather(lat, lon);
