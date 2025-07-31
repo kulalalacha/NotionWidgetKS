@@ -10,14 +10,15 @@ function script(d, s, id) {
   fjs.parentNode.insertBefore(js, fjs);
 }
 
-function getWeather(lat, lon) {
+function getWeather(lat, lon, city) {
   const el = document.getElementById("weather");
   const latStr = lat.toFixed(2).replace('.', '');
   const lonStr = lon.toFixed(2).replace('.', '');
-  const url = `https://forecast7.com/en/${latStr}d${lonStr}/location/`;
+
+  const url = `https://forecast7.com/en/${latStr}d${lonStr}/${city.toLowerCase()}/`;
 
   el.setAttribute("href", url);
-  el.setAttribute("data-label_1", "YOUR CITY");
+  el.setAttribute("data-label_1", city.toUpperCase());
   el.setAttribute("data-icons", "Climacons Animated");
   el.setAttribute("data-mode", "Current");
 
@@ -25,9 +26,6 @@ function getWeather(lat, lon) {
     script(document, 'script', 'weatherwidget-io-js');
   }, 50);
 }
-
-
-
 
 // Theme
 function light() {
