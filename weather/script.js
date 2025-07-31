@@ -1,5 +1,4 @@
 function script(d, s, id) {
-  // โหลด widget script ใหม่ หลังจากแก้ href/data
   const old = d.getElementById(id);
   if (old) old.remove();
 
@@ -12,8 +11,12 @@ function script(d, s, id) {
 
 function getWeather(lat, lon, city) {
   const el = document.getElementById("weather");
+
+  // Fix format like 35.68 → 3568
   const latStr = lat.toFixed(2).replace('.', '');
   const lonStr = lon.toFixed(2).replace('.', '');
+
+  // Create URL for forecast7.com
   const url = `https://forecast7.com/en/${latStr}d${lonStr}/${city.toLowerCase()}/`;
 
   el.setAttribute("href", url);
@@ -26,8 +29,7 @@ function getWeather(lat, lon, city) {
   }, 50);
 }
 
-
-// Theme
+// THEMES
 function light() {
   document.documentElement.setAttribute('data-theme', 'pure');
   const el = document.getElementById('weather');
@@ -48,29 +50,21 @@ function dark() {
   el.setAttribute('data-suncolor', '#F58f70');
 }
 
-// Theme init
+// Apply theme
 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
   dark();
 } else {
   light();
 }
-
-// Watch theme change
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
-  if (event.matches) {
-    dark();
-  } else {
-    light();
-  }
+  if (event.matches) dark();
+  else light();
 });
 
-// Get lat/lon from URL
+// 🚀 Parse URL Parameters
 const params = new URLSearchParams(window.location.search);
-const rawLat = parseFloat(params.get("lat"));
-const rawLon = parseFloat(params.get("lon"));
-const lat = !isNaN(rawLat) ? rawLat : 53.55;
-const lon = !isNaN(rawLon) ? rawLon : 10.00;
+const lat = parseFloat(params.get("lat")) || 53.55;
+const lon = parseFloat(params.get("lon")) || 10.00;
 const city = params.get("city") || "hamburg";
 
 getWeather(lat, lon, city);
-
