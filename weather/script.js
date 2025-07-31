@@ -12,13 +12,11 @@ function script(d, s, id) {
 function getWeather(lat, lon, city) {
   const el = document.getElementById("weather");
 
-  // สร้างพิกัดในรูปแบบ forecast7.com ต้องการ เช่น 35d68n139d69e
-  const latDir = lat >= 0 ? 'n' : 's';
-  const lonDir = lon >= 0 ? 'e' : 'w';
-  const latStr = Math.abs(lat).toFixed(2).replace('.', '') + latDir;
-  const lonStr = Math.abs(lon).toFixed(2).replace('.', '') + lonDir;
-
+  const latStr = `${Math.abs(lat).toFixed(2).replace('.', 'd')}${lat >= 0 ? 'n' : 's'}`;
+  const lonStr = `${Math.abs(lon).toFixed(2).replace('.', 'd')}${lon >= 0 ? 'e' : 'w'}`;
   const url = `https://forecast7.com/en/${latStr}${lonStr}/${city.toLowerCase()}/`;
+
+  console.log('Forecast7 URL:', url); // 🧪 Debugging
 
   el.setAttribute("href", url);
   el.setAttribute("data-label_1", city.toUpperCase());
@@ -29,6 +27,7 @@ function getWeather(lat, lon, city) {
     script(document, 'script', 'weatherwidget-io-js');
   }, 50);
 }
+
 
 
 // THEMES
