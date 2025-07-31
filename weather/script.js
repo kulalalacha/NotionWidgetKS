@@ -21,9 +21,12 @@ function getWeather(lat, lon) {
   el.setAttribute("data-icons", "Climacons Animated");
   el.setAttribute("data-mode", "Current");
 
-  // โหลด widget script ใหม่ หลังจากเซ็ตค่าทั้งหมด
-  script(document, 'script', 'weatherwidget-io-js');
+  // 💥 เพิ่ม delay ก่อนโหลด widget script
+  setTimeout(() => {
+    script(document, 'script', 'weatherwidget-io-js');
+  }, 50);
 }
+
 
 // Theme
 function light() {
