@@ -14,7 +14,6 @@ function getWeather(lat, lon, city) {
   const el = document.getElementById("weather");
   const latStr = lat.toFixed(2).replace('.', '');
   const lonStr = lon.toFixed(2).replace('.', '');
-
   const url = `https://forecast7.com/en/${latStr}d${lonStr}/${city.toLowerCase()}/`;
 
   el.setAttribute("href", url);
@@ -26,6 +25,7 @@ function getWeather(lat, lon, city) {
     script(document, 'script', 'weatherwidget-io-js');
   }, 50);
 }
+
 
 // Theme
 function light() {
