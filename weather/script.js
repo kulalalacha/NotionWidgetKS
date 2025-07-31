@@ -12,20 +12,22 @@ function script(d, s, id) {
 
 function getWeather(lat, lon) {
   const el = document.getElementById("weather");
-  const latFixed = lat.toFixed(2);
-  const lonFixed = lon.toFixed(2);
 
-  const url = `https://forecast7.com/en/${latFixed}d${lonFixed}/location/`;
+  
+  const latStr = lat.toFixed(2).replace('.', '');
+  const lonStr = lon.toFixed(2).replace('.', '');
+  const url = `https://forecast7.com/en/${latStr}d${lonStr}/your-city/`;
+
   el.setAttribute("href", url);
   el.setAttribute("data-label_1", "YOUR CITY");
   el.setAttribute("data-icons", "Climacons Animated");
   el.setAttribute("data-mode", "Current");
 
-  // 💥 เพิ่ม delay ก่อนโหลด widget script
   setTimeout(() => {
     script(document, 'script', 'weatherwidget-io-js');
   }, 50);
 }
+
 
 
 // Theme
